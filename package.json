@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "spago test",
-    "build": "spago bundle-app --to public/main.js"
+    "build": "spago bundle-app --to public/app.js"
   },
   "keywords": [],
   "author": "",
