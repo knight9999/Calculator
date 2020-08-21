@@ -84,7 +84,7 @@ render state = do
               [ HH.button [] [HH.text "9" ]]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.button [] [HH.text "x" ]]
+              [ HH.button [] [HH.text "×" ]]
             ]
           , HH.div
             []

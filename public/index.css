@@ -63,6 +63,7 @@ body .github-fork-ribbon:before {
   font-weight: 200;
   flex: 0 0 auto;
   width: 100%;
+  font-family: "Helvetica Light", Helvetica, Arial, sans-serif;
 }
 
 .component-display > div {
