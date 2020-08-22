@@ -70,7 +70,7 @@ removeZeros str
           _ -> str
 
 type ChildSlots = (
-  button :: Button.Slot Button.Btn
+  button :: Button.Slot
 )
 
 _button :: SProxy "button"
@@ -236,7 +236,7 @@ handleAction = case _ of
       Button.Equal -> 
         H.modify_ \(State st) -> State st
           { total = case st.operation of
-              Nop -> st.total
+              Nop -> if st.next == "" then st.total else fromMaybe 0.0 $ Number.fromString st.next
               operation -> calc operation st.total (fromMaybe 0.0 $ Number.fromString st.next)
           , next = ""
           , operation = Nop

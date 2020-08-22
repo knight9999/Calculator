@@ -28,7 +28,7 @@ instance showBtn :: Show Btn where
   show (Num x) = toStringAs decimal x
 
 
-type Slot p = forall q. H.Slot q Message p
+type Slot = forall q. H.Slot q Message Btn
 
 data Action = Push Btn
 

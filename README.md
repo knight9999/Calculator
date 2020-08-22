@@ -12,6 +12,8 @@ https://ahfarmer.github.io/calculator/
 
 # 開発ノート
 
+## 方針
+
 スロットを使ってボタンを作る
 https://github.com/purescript-halogen/purescript-halogen/blob/master/examples/components-inputs/src/Container.purs
 
@@ -22,3 +24,8 @@ https://github.com/purescript-halogen/purescript-halogen/blob/master/examples/co
 https://github.com/purescript-halogen/purescript-halogen/blob/master/examples/components/src/Container.purs
 
 のように、HandledButtonの処理をslotの第四パラメータに使う
+
+## 2020/08/22
+
+Buttonのロジックを取り出して、単体でテスト出来るようにする。
+
