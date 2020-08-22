@@ -32,7 +32,7 @@ import Effect.Class
 import Button as Button
 import Logic.CalcModel as CalcModel
 import Logic.Operation as Ope
-
+import View.CalculatorView as CalcView
 
 data Action = Init | HandleButton Button.Message
 
@@ -73,93 +73,12 @@ initialState _ = State {
 }
 
 render :: forall m. (MonadEffect m) => State -> H.ComponentHTML Action ChildSlots m
-render (State state) = do
+render (State state) =
   HH.body []
-    [ HH.div
-      [ HP.attr (HC.AttrName "id") "root" ]
-      [ HH.div 
-        [ HP.attr (HC.AttrName "class") "component-app" ]
-        [ HH.div 
-          [ HP.attr (HC.AttrName "class") "component-display" ]
-          [ HH.div [] [HH.text $ show state.model] ]
-        , HH.div 
-          [ HP.attr (HC.AttrName "class") "component-button-panel"]
-          [ HH.div
-            []
-            [ HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button CalcModel.AC Button.component CalcModel.AC (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button CalcModel.PlusMinus Button.component CalcModel.PlusMinus (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button CalcModel.Percent Button.component CalcModel.Percent (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.slot _button (CalcModel.Operation Ope.Div) Button.component (CalcModel.Operation Ope.Div) (Just <<< HandleButton) ]
-            ]
-          , HH.div
-            []
-            [ HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 7) Button.component (CalcModel.Num 7) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 8) Button.component (CalcModel.Num 8) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 9) Button.component (CalcModel.Num 9) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.slot _button (CalcModel.Operation Ope.Prod) Button.component (CalcModel.Operation Ope.Prod) (Just <<< HandleButton) ]
-            ]
-          , HH.div
-            []
-            [ HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 4) Button.component (CalcModel.Num 4) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 5) Button.component (CalcModel.Num 5) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 6) Button.component (CalcModel.Num 6) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.slot _button (CalcModel.Operation Ope.Minus) Button.component (CalcModel.Operation Ope.Minus) (Just <<< HandleButton) ]
-            ]            
-          , HH.div
-            []
-            [ HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 1) Button.component (CalcModel.Num 1) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 2) Button.component (CalcModel.Num 2) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button (CalcModel.Num 3) Button.component (CalcModel.Num 3) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.slot _button (CalcModel.Operation Ope.Plus) Button.component (CalcModel.Operation Ope.Plus) (Just <<< HandleButton) ]
-            ]            
-          , HH.div
-            []
-            [ HH.div
-              [ HP.attr (HC.AttrName "class") "component-button wide" ]
-              [ HH.slot _button (CalcModel.Num 0) Button.component (CalcModel.Num 0) (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ HH.slot _button CalcModel.Dot Button.component CalcModel.Dot (Just <<< HandleButton) ]
-            , HH.div
-              [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ HH.slot _button CalcModel.Equal Button.component CalcModel.Equal (Just <<< HandleButton) ]
-            ]            
-          ]
-        ]
-      ]
-    , HH.a
+    [ CalcView.render
+      (\command -> HH.slot _button command Button.component command (Just <<< HandleButton))
+      state.model 
+      , HH.a
       [ HP.attr (HC.AttrName "href") "https://github.com/knight9999/Calculator"
       , HP.attr (HC.AttrName "target") "_blank"
       , HP.attr (HC.AttrName "class") "github-fork-ribbon left-top"
