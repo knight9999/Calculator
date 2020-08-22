@@ -161,27 +161,6 @@ handleCommand command (Model model) =
               }
           Equal ->
             updateModel Ope.Nop (Model model)
-            -- Model $ model
-            --   { total =
-            --     case model.operation of
-            --       Ope.Nop ->
-            --         if model.next == ""
-            --           then model.total
-            --           else fromMaybe 0.0 $ Number.fromString model.next
-            --       operation ->
-            --         fromMaybe 0.0 $ updateTotal operation model.total model.next
-            --   , next = ""
-            --   , operation = Ope.Nop
-            --   }
-
-    --         H.modify_ \(State st) -> State st
-    --           { total = case st.operation of
-    --               Ope.Nop -> if st.next == "" then st.total else fromMaybe 0.0 $ Number.fromString st.next
-    --               operation -> fromMaybe 0.0 $ updateTotal operation st.total st.next
-    --           , next = ""
-    --           , operation = Ope.Nop
-    --           }
-
 
           _ -> Model $ model
     if model.isError 
