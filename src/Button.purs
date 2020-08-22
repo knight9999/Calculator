@@ -1,5 +1,5 @@
 module Button
-  (Btn(..), Slot, Message(..), component) where
+  (Slot, Message(..), component) where
 
 import Prelude
 import Halogen as H
@@ -10,33 +10,22 @@ import Data.Int
 import Data.Maybe (Maybe(..))
 import Data.Number.Format
 
-data Btn = AC | PlusMinus | Percent | Div | Prod | Plus | Minus | Dot | Equal | Num Int
+import Logic.CalcModel
 
-derive instance eqBtn :: Eq Btn
-derive instance ordBtn :: Ord Btn
+-- data Btn = AC | PlusMinus | Percent | Div | Prod | Plus | Minus | Dot | Equal | Num Int
 
-instance showBtn :: Show Btn where
-  show AC = "AC"
-  show PlusMinus = "+/-"
-  show Percent = "%"
-  show Div = "÷"
-  show Prod = "×"
-  show Plus = "+"
-  show Minus = "-"
-  show Equal = "="
-  show Dot = "."
-  show (Num x) = toStringAs decimal x
+-- derive instance eqBtn :: Eq Btn
+-- derive instance ordBtn :: Ord Btn
 
+type Slot = forall q. H.Slot q Message Command
 
-type Slot = forall q. H.Slot q Message Btn
+data Action = Push Command
 
-data Action = Push Btn
+data Message = Pushed Command
 
-data Message = Pushed Btn
+type State = Command
 
-type State = Btn
-
-component :: forall q m. H.Component HH.HTML q Btn Message m
+component :: forall q m. H.Component HH.HTML q Command Message m
 component =
   H.mkComponent
     { initialState: \x -> x
