@@ -2,37 +2,20 @@ module CalculatorApp
   ( component
   ) where
 
-import Prelude
+import Prelude (class Show, Unit, bind, pure, show, unit, ($), (<<<))
 import Halogen as H
 import Halogen.HTML as HH
-import Halogen.HTML.Core as HC
-import Halogen.HTML.Events as HE
-import Halogen.HTML.Properties as HP
-import Halogen.Aff as HA
-import Web.Event.Event (Event)
-import Web.Event.Event as Event
-import Effect.Aff.Class
 
-import Data.Maybe (Maybe(..), fromMaybe)
-import Data.Array
-import Data.Array.NonEmpty as NonEmptyArray
-import Data.Int
-import Data.Either
+import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
-import Data.String as String
-import Data.String.Regex as Regex
-import Data.String.Regex.Flags
-import Data.Number as Number
-import Data.Number.Format
 
-import Effect (Effect, foreachE)
-import Effect.Console (log, logShow)
-import Effect.Class
+import Effect.Class (class MonadEffect)
 
 import Button as Button
-import Logic.CalcModel as CalcModel
-import Logic.Operation as Ope
-import View.CalculatorView as CalcView
+import Model.Calculator as CalcM
+import Model.Operation as OpeM
+import View.Calculator as CalcV
+import View.Info as InfoV
 
 data Action = Init | HandleButton Button.Message
 
@@ -44,7 +27,7 @@ _button :: SProxy "button"
 _button = SProxy
 
 newtype State = State {
-  model :: CalcModel.Model
+  model :: CalcM.Model
 }
 
 instance showState :: Show State where
@@ -64,10 +47,10 @@ component =
 initialState :: forall i. i -> State
 initialState _ = State {
   model:
-    CalcModel.Model
+    CalcM.Model
       { next: ""
       , total: 0.0
-      , operation: Ope.Nop
+      , operation: OpeM.Nop
       , isError: false
       }
 }
@@ -75,16 +58,10 @@ initialState _ = State {
 render :: forall m. (MonadEffect m) => State -> H.ComponentHTML Action ChildSlots m
 render (State state) =
   HH.body []
-    [ CalcView.render
+    [ CalcV.render
       (\command -> HH.slot _button command Button.component command (Just <<< HandleButton))
       state.model 
-      , HH.a
-      [ HP.attr (HC.AttrName "href") "https://github.com/knight9999/Calculator"
-      , HP.attr (HC.AttrName "target") "_blank"
-      , HP.attr (HC.AttrName "class") "github-fork-ribbon left-top"
-      , HP.attr (HC.AttrName "title") "Fork me on GitHub"
-      ]
-      [ HH.text "Fork me on GitHub" ]
+    , InfoV.render
     ]
 
 handleAction :: forall o m. (MonadEffect m) => Action -> H.HalogenM State Action ChildSlots o m Unit
@@ -93,5 +70,5 @@ handleAction = case _ of
     pure unit
   HandleButton (Button.Pushed command) -> do
     (State state) <- H.get
-    let model' = CalcModel.handleCommand command state.model
+    let model' = CalcM.handleCommand command state.model
     H.modify_ \_ -> State { model: model' }

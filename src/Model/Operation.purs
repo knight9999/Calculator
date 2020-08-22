@@ -1,4 +1,4 @@
-module Logic.Operation
+module Model.Operation
   ( Operation(..)
   ) where
 

@@ -1,4 +1,4 @@
-module View.CalculatorView
+module View.Calculator
   ( render
   )
   where
@@ -10,10 +10,10 @@ import Halogen.HTML.Core as HC
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 
-import Logic.Operation as Ope
-import Logic.CalcModel as CalcModel
+import Model.Operation as OpeM
+import Model.Calculator as CalcM
 
-render :: forall a c m. (CalcModel.Command -> H.ComponentHTML a c m) -> CalcModel.Model -> H.ComponentHTML a c m
+render :: forall a c m. (CalcM.Command -> H.ComponentHTML a c m) -> CalcM.Model -> H.ComponentHTML a c m
 render mkSlot model = do 
     HH.div
       [ HP.attr (HC.AttrName "id") "root" ]
@@ -28,73 +28,73 @@ render mkSlot model = do
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcModel.AC ]
+              [ mkSlot CalcM.AC ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcModel.PlusMinus ]
+              [ mkSlot CalcM.PlusMinus ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcModel.Percent ]
+              [ mkSlot CalcM.Percent ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcModel.Operation Ope.Div ]
+              [ mkSlot $ CalcM.Operation OpeM.Div ]
             ]
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 7 ]
+              [ mkSlot $ CalcM.Num 7 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 8 ]
+              [ mkSlot $ CalcM.Num 8 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 9 ]
+              [ mkSlot $ CalcM.Num 9 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcModel.Operation Ope.Prod ]
+              [ mkSlot $ CalcM.Operation OpeM.Prod ]
             ]
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 4 ]
+              [ mkSlot $ CalcM.Num 4 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 5 ]
+              [ mkSlot $ CalcM.Num 5 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 6 ]
+              [ mkSlot $ CalcM.Num 6 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcModel.Operation Ope.Minus ]
+              [ mkSlot $ CalcM.Operation OpeM.Minus ]
             ]            
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 1 ]
+              [ mkSlot $ CalcM.Num 1 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 2 ]
+              [ mkSlot $ CalcM.Num 2 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Num 3 ]
+              [ mkSlot $ CalcM.Num 3 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcModel.Operation Ope.Plus ]
+              [ mkSlot $ CalcM.Operation OpeM.Plus ]
             ]            
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button wide" ]
-              [ mkSlot $ CalcModel.Num 0 ]
+              [ mkSlot $ CalcM.Num 0 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcModel.Dot ]
+              [ mkSlot $ CalcM.Dot ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcModel.Equal ]
+              [ mkSlot $ CalcM.Equal ]
             ]            
           ]
         ]

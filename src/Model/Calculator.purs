@@ -1,4 +1,4 @@
-module Logic.CalcModel
+module Model.Calculator
   ( Model(..)
   , Command(..)
   , updateModel
@@ -7,10 +7,9 @@ module Logic.CalcModel
   ) where
 
 import Prelude
-import Data.Int
+import Data.Int (decimal, toStringAs)
 import Data.Maybe (Maybe(..), fromMaybe)
-import Data.Either
-import Data.Array
+import Data.Either (Either(..))
 import Data.Array.NonEmpty as NonEmptyArray
 import Data.Number as Number
 import Data.Number.Format
@@ -19,9 +18,9 @@ import Data.String.Regex as Regex
 import Data.String.Regex.Flags
 
 
-import Logic.Operation as Ope
+import Model.Operation as OpeM
 
-data Command = AC | PlusMinus | Percent | Dot | Equal | Operation Ope.Operation | Num Int
+data Command = AC | PlusMinus | Percent | Dot | Equal | Operation OpeM.Operation | Num Int
 
 derive instance eqCommand :: Eq Command
 derive instance ordCommand :: Ord Command
@@ -30,11 +29,11 @@ instance showCommand :: Show Command where
   show AC = "AC"
   show PlusMinus = "+/-"
   show Percent = "%"
-  show (Operation Ope.Div) = "÷"
-  show (Operation Ope.Prod) = "×"
-  show (Operation Ope.Plus) = "+"
-  show (Operation Ope.Minus) = "-"
-  show (Operation Ope.Nop) = "Nop"
+  show (Operation OpeM.Div) = "÷"
+  show (Operation OpeM.Prod) = "×"
+  show (Operation OpeM.Plus) = "+"
+  show (Operation OpeM.Minus) = "-"
+  show (Operation OpeM.Nop) = "Nop"
   show Equal = "="
   show Dot = "."
   show (Num x) = toStringAs decimal x
@@ -42,11 +41,11 @@ instance showCommand :: Show Command where
 newtype Model = Model {
   total :: Number
 , next :: String
-, operation :: Ope.Operation
+, operation :: OpeM.Operation
 , isError :: Boolean
 }
 
-updateModel :: Ope.Operation -> Model -> Model
+updateModel :: OpeM.Operation -> Model -> Model
 updateModel op (Model model) = 
   case (updateTotal model.operation model.total model.next) of
     Just total -> 
@@ -59,11 +58,11 @@ updateModel op (Model model) =
       Model model
       { total = 0.0
       , next = ""
-      , operation = Ope.Nop
+      , operation = OpeM.Nop
       , isError = true
       }
 
-updateTotal :: Ope.Operation -> Number -> String -> Maybe Number
+updateTotal :: OpeM.Operation -> Number -> String -> Maybe Number
 updateTotal op total next = 
   if next /= "" 
     then
@@ -71,16 +70,16 @@ updateTotal op total next =
     else 
       pure total
 
-calc :: Ope.Operation -> Number -> Number -> Maybe Number
+calc :: OpeM.Operation -> Number -> Number -> Maybe Number
 calc op num1 num2 = case op of
-  Ope.Plus -> pure $ num1 + num2 
-  Ope.Minus -> pure $ num1 - num2
-  Ope.Prod -> pure $ num1 * num2
-  Ope.Div ->
+  OpeM.Plus -> pure $ num1 + num2 
+  OpeM.Minus -> pure $ num1 - num2
+  OpeM.Prod -> pure $ num1 * num2
+  OpeM.Div ->
     if num2 == 0.0
       then Nothing
       else pure $ num1 / num2
-  Ope.Nop -> pure $ num2
+  OpeM.Nop -> pure $ num2
   _ -> pure $ num1
 
 
@@ -122,11 +121,11 @@ handleCommand command (Model model) =
       calc command' =
         case command' of
           AC ->
-            Model $ model { total = 0.0, next = "", operation = Ope.Nop }
+            Model $ model { total = 0.0, next = "", operation = OpeM.Nop }
           PlusMinus ->
             if model.next == ""
               then
-                Model $ model { total = -model.total, operation = Ope.Nop }
+                Model $ model { total = -model.total, operation = OpeM.Nop }
               else
                 Model $ model 
                   { next = 
@@ -137,7 +136,7 @@ handleCommand command (Model model) =
           Percent ->
             if model.next == ""
               then
-                Model $ model { total = model.total * 0.01, next = "", operation = Ope.Nop }
+                Model $ model { total = model.total * 0.01, next = "", operation = OpeM.Nop }
               else
                 Model $ model
                   { next = stringFromNumber ((fromMaybe 0.0 $ Number.fromString model.next) / 100.0)
@@ -160,7 +159,7 @@ handleCommand command (Model model) =
                 ) <> "."
               }
           Equal ->
-            updateModel Ope.Nop (Model model)
+            updateModel OpeM.Nop (Model model)
 
           _ -> Model $ model
     if model.isError 

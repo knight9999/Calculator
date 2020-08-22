@@ -10,12 +10,7 @@ import Data.Int
 import Data.Maybe (Maybe(..))
 import Data.Number.Format
 
-import Logic.CalcModel
-
--- data Btn = AC | PlusMinus | Percent | Div | Prod | Plus | Minus | Dot | Equal | Num Int
-
--- derive instance eqBtn :: Eq Btn
--- derive instance ordBtn :: Ord Btn
+import Model.Calculator
 
 type Slot = forall q. H.Slot q Message Command
 
