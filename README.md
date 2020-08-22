@@ -10,7 +10,7 @@ https://github.com/ahfarmer/calculator
 React.js版電卓のプレイ
 https://ahfarmer.github.io/calculator/
 
-# 開発ノート
+# 開発ノート（メモ）
 
 ## 方針
 

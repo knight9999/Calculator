@@ -182,7 +182,7 @@ render state = do
         ]
       ]
     , HH.a
-      [ HP.attr (HC.AttrName "href") "https://github.com/ahfarmer/calculator"
+      [ HP.attr (HC.AttrName "href") "https://github.com/knight9999/Calculator"
       , HP.attr (HC.AttrName "target") "_blank"
       , HP.attr (HC.AttrName "class") "github-fork-ribbon left-top"
       , HP.attr (HC.AttrName "title") "Fork me on GitHub"
