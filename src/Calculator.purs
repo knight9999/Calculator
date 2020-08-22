@@ -48,7 +48,7 @@ instance showState :: Show State where
   show (State s) = 
     if s.next /= ""
       then s.next -- show Next
-      else removeZeros $ toStringWith (precision 20) s.total -- show Total
+      else removeZeros $ toStringWith (precision 16) s.total -- show Total
 
 
 removeZeros :: String -> String
@@ -235,19 +235,13 @@ handleAction = case _ of
           State (st{ next = (if st.next == "" then "0" else st.next) <> "." }) 
       Button.Equal -> 
         H.modify_ \(State st) -> State st
-          { total = calc st.operation st.total (fromMaybe 0.0 $ Number.fromString st.next)
+          { total = case st.operation of
+              Nop -> st.total
+              operation -> calc operation st.total (fromMaybe 0.0 $ Number.fromString st.next)
           , next = ""
           , operation = Nop
           }
       _ -> pure unit
-    -- case (fromString str) of
-    --   Just num -> do
-    --     H.modify_ (\st -> st { input = st.input + num})
-    --   Nothing -> do
-    --     if str == "AC"
-    --       then
-    --         H.modify_ (\st -> st { input = 0})
-    --       else
 
 updateTotal :: Operation -> Number -> String -> Number
 updateTotal op total next = 
