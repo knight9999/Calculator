@@ -4,13 +4,9 @@ module Button
 import Prelude
 import Halogen as H
 import Halogen.HTML as HH
-import Halogen.HTML.Events as HE
 
-import Data.Int
-import Data.Maybe (Maybe(..))
-import Data.Number.Format
-
-import Model.Calculator
+import Model.Calculator (Command)
+import View.Button as ButtonV
 
 type Slot = forall q. H.Slot q Message Command
 
@@ -30,10 +26,7 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action () m
-render state =
-  HH.button
-    [ HE.onClick \_ -> Just (Push state) ]
-    [ HH.text $ show state ]
+render state = ButtonV.render (Push state) state
 
 handleAction :: forall m. Action -> H.HalogenM State Action () Message m Unit
 handleAction = case _ of

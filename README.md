@@ -43,6 +43,15 @@ data Command = AC | PlusMinus | Percent | Dot | Equal | Operation | Num Int
 
 とする。
 
+## 2020/08/23
 
-Buttonのロジックを取り出して、単体でテスト出来るようにする。
+ButtonのViewを分離する
+CalculatorApp.pursをCalculator.pursに変更する
+
+Modelを保存するリポジトリ機能を実装する？
+
+タイトルをPureScript Calculatorにする。
+
+Calculatorのロジックを取り出して、単体でテスト出来るようにする。
+
 

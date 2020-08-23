@@ -1,4 +1,4 @@
-module CalculatorApp
+module Calculator
   ( component
   ) where
 
