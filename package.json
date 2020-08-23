@@ -6,6 +6,7 @@
   "scripts": {
     "test": "spago test",
     "build": "spago bundle-app --to public/app.js",
+    "watch": "spago bundle-app --watch --to public/app.js",
     "serve": "live-server public"
   },
   "keywords": [],
