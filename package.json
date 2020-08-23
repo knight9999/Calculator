@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "spago test",
-    "build": "spago bundle-app --to public/app.js"
+    "build": "spago bundle-app --to public/app.js",
+    "serve": "live-server public"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "purescript": "^0.13.8",
-    "spago": "^0.16.0"
+    "spago": "^0.16.0",
+    "live-server": "^1.2.1"
   }
 }

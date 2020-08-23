@@ -10,6 +10,31 @@ https://github.com/ahfarmer/calculator
 React.js版電卓のプレイ
 https://ahfarmer.github.io/calculator/
 
+
+# インストールとビルド
+
+```
+$ npm install
+$ npx spago install
+$ npm run build
+```
+
+# アプリの開き方
+
+```
+$ npm run serve
+```
+
+または、
+
+`public/index.html`を静的なファイルとしてブラウザ(Chrome, Firefoxなど)で開きます。
+
+
+# テスト
+
+$ npm test
+
+
 # 開発ノート（メモ）
 
 ## 方針
