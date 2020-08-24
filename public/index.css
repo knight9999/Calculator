@@ -27,13 +27,13 @@ body .github-fork-ribbon:before {
 
 @media (min-width: 400px) and (min-height: 400px) {
   html {
-    font-size: 20px;
+    font-size: 35px;
   }
 }
 
 @media (min-width: 500px) and (min-height: 500px) {
   html {
-    font-size: 30px;
+    font-size: 40px;
   }
 }
 
