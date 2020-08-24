@@ -1,0 +1,116 @@
+html {
+  height: 100%;
+  font-size: 10px;
+}
+
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+body .github-fork-ribbon:before {
+  background-color: #333;
+}
+
+@media screen and (max-width: 400px) {
+  .github-fork-ribbon {
+    display: none;
+  }
+}
+
+@media (min-width: 400px) and (min-height: 400px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 500px) and (min-height: 500px) {
+  html {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 600px) and (min-height: 600px) {
+  html {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 800px) and (min-height: 800px) {
+  html {
+    font-size: 50px;
+  }
+}
+
+.component-app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.component-display {
+  background-color: #858694;
+  color: white;
+  text-align: right;
+  font-weight: 200;
+  flex: 0 0 auto;
+  width: 100%;
+  font-family: "Helvetica Light", Helvetica, Arial, sans-serif;
+}
+
+.component-display > div {
+  font-size: 2.5rem;
+  padding: 0.2rem 0.7rem 0.1rem 0.5rem;
+}
+
+.component-button-panel {
+  background-color: #858694;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 1 0 auto;
+}
+
+.component-button-panel > div {
+  width: 100%;
+  margin-bottom: 1px;
+  flex: 1 0 auto;
+  display: flex;
+}
+
+.component-button {
+  display: inline-flex;
+  width: 25%;
+  flex: 1 0 auto;
+}
+
+.component-button.wide {
+  width: 50%;
+}
+
+.component-button button {
+  background-color: #e0e0e0;
+  border: 0;
+  font-size: 1.5rem;
+  margin: 0 1px 0 0;
+  flex: 1 0 auto;
+  padding: 0;
+}
+
+.component-button:last-child button {
+  margin-right: 0;
+}
+
+.component-button.orange button {
+  background-color: #f5923e;
+  color: white;
+}
+
