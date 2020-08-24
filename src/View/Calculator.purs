@@ -7,13 +7,12 @@ import Prelude
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Core as HC
-import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 
-import Model.Operation as OpeM
-import Model.Calculator as CalcM
+import Model.Operation as MO
+import Model.Calculator as MC
 
-render :: forall a c m. (CalcM.Command -> H.ComponentHTML a c m) -> CalcM.Model -> H.ComponentHTML a c m
+render :: forall a c m. (MC.Command -> H.ComponentHTML a c m) -> MC.Model -> H.ComponentHTML a c m
 render mkSlot model = do 
     HH.div
       [ HP.attr (HC.AttrName "id") "root" ]
@@ -28,73 +27,73 @@ render mkSlot model = do
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcM.AC ]
+              [ mkSlot MC.AC ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcM.PlusMinus ]
+              [ mkSlot MC.PlusMinus ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot CalcM.Percent ]
+              [ mkSlot MC.Percent ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcM.Operation OpeM.Div ]
+              [ mkSlot $ MC.Operation MO.Div ]
             ]
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 7 ]
+              [ mkSlot $ MC.Num 7 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 8 ]
+              [ mkSlot $ MC.Num 8 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 9 ]
+              [ mkSlot $ MC.Num 9 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcM.Operation OpeM.Prod ]
+              [ mkSlot $ MC.Operation MO.Prod ]
             ]
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 4 ]
+              [ mkSlot $ MC.Num 4 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 5 ]
+              [ mkSlot $ MC.Num 5 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 6 ]
+              [ mkSlot $ MC.Num 6 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcM.Operation OpeM.Minus ]
+              [ mkSlot $ MC.Operation MO.Minus ]
             ]            
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 1 ]
+              [ mkSlot $ MC.Num 1 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 2 ]
+              [ mkSlot $ MC.Num 2 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Num 3 ]
+              [ mkSlot $ MC.Num 3 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcM.Operation OpeM.Plus ]
+              [ mkSlot $ MC.Operation MO.Plus ]
             ]            
           , HH.div
             []
             [ HH.div
               [ HP.attr (HC.AttrName "class") "component-button wide" ]
-              [ mkSlot $ CalcM.Num 0 ]
+              [ mkSlot $ MC.Num 0 ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button" ]
-              [ mkSlot $ CalcM.Dot ]
+              [ mkSlot $ MC.Dot ]
             , HH.div
               [ HP.attr (HC.AttrName "class") "component-button orange" ]
-              [ mkSlot $ CalcM.Equal ]
+              [ mkSlot $ MC.Equal ]
             ]            
           ]
         ]

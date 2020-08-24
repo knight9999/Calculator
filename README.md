@@ -10,6 +10,10 @@ https://github.com/ahfarmer/calculator
 React.js版電卓のプレイ
 https://ahfarmer.github.io/calculator/
 
+# プレイ
+
+https://knight9999.github.io/Calculator/
+
 
 # インストールとビルド
 
@@ -28,7 +32,6 @@ $ npm run serve
 または、
 
 `public/index.html`を静的なファイルとしてブラウザ(Chrome, Firefoxなど)で開きます。
-
 
 # テスト
 

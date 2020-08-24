@@ -11,7 +11,7 @@ import Halogen as H
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
 
-import Calculator as CalculatorA
+import Calculator as Calculator
 
 main :: Effect Unit
 main = HA.runHalogenAff do
@@ -20,4 +20,4 @@ main = HA.runHalogenAff do
     html <- MaybeT $ HA.selectElement (QuerySelector "html")
     body <- MaybeT $ HA.selectElement (QuerySelector "body")
     _ <- H.liftEffect $ removeChild (HTML.toNode body) (HTML.toNode html)
-    lift $ runUI CalculatorA.component unit html
+    lift $ runUI Calculator.component unit html
