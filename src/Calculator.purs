@@ -12,10 +12,10 @@ import Data.Symbol (SProxy(..))
 import Effect.Class (class MonadEffect)
 
 import Button as Button
-import Model.Calculator as CalcM
-import Model.Operation as OpeM
-import View.Calculator as CalcV
-import View.Info as InfoV
+import Model.Calculator as MC
+import Model.Operation as MO
+import View.Calculator as VC
+import View.Info as VI
 
 data Action = Init | HandleButton Button.Message
 
@@ -27,7 +27,7 @@ _button :: SProxy "button"
 _button = SProxy
 
 newtype State = State {
-  model :: CalcM.Model
+  model :: MC.Model
 }
 
 instance showState :: Show State where
@@ -47,10 +47,10 @@ component =
 initialState :: forall i. i -> State
 initialState _ = State {
   model:
-    CalcM.Model
+    MC.Model
       { next: ""
       , total: 0.0
-      , operation: OpeM.Nop
+      , operation: MO.Nop
       , isError: false
       }
 }
@@ -58,10 +58,10 @@ initialState _ = State {
 render :: forall m. (MonadEffect m) => State -> H.ComponentHTML Action ChildSlots m
 render (State state) =
   HH.body []
-    [ CalcV.render
+    [ VC.render
       (\command -> HH.slot _button command Button.component command (Just <<< HandleButton))
       state.model 
-    , InfoV.render
+    , VI.render
     ]
 
 handleAction :: forall o m. (MonadEffect m) => Action -> H.HalogenM State Action ChildSlots o m Unit
@@ -70,5 +70,5 @@ handleAction = case _ of
     pure unit
   HandleButton (Button.Pushed command) -> do
     (State state) <- H.get
-    let model' = CalcM.handleCommand command state.model
+    let model' = MC.handleCommand command state.model
     H.modify_ \_ -> State { model: model' }

@@ -6,7 +6,7 @@ import Halogen as H
 import Halogen.HTML as HH
 
 import Model.Calculator (Command)
-import View.Button as ButtonV
+import View.Button as VB
 
 type Slot = forall q. H.Slot q Message Command
 
@@ -26,7 +26,7 @@ component =
     }
 
 render :: forall m. State -> H.ComponentHTML Action () m
-render state = ButtonV.render (Push state) state
+render state = VB.render (Push state) state
 
 handleAction :: forall m. Action -> H.HalogenM State Action () Message m Unit
 handleAction = case _ of

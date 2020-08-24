@@ -6,21 +6,21 @@ module Model.Calculator
   , handleCommand
   ) where
 
-import Prelude
+import Prelude (class Eq, class Ord, class Show, bind, join, negate, pure, ($), (&&), (*), (+), (-), (/), (/=), (<$>), (<>), (==))
 import Data.Int (decimal, toStringAs)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Either (Either(..))
 import Data.Array.NonEmpty as NonEmptyArray
 import Data.Number as Number
-import Data.Number.Format
+import Data.Number.Format (precision, toStringWith)
 import Data.String as String
 import Data.String.Regex as Regex
-import Data.String.Regex.Flags
+import Data.String.Regex.Flags (noFlags)
 
 
-import Model.Operation as OpeM
+import Model.Operation as MO
 
-data Command = AC | PlusMinus | Percent | Dot | Equal | Operation OpeM.Operation | Num Int
+data Command = AC | PlusMinus | Percent | Dot | Equal | Operation MO.Operation | Num Int
 
 derive instance eqCommand :: Eq Command
 derive instance ordCommand :: Ord Command
@@ -29,11 +29,11 @@ instance showCommand :: Show Command where
   show AC = "AC"
   show PlusMinus = "+/-"
   show Percent = "%"
-  show (Operation OpeM.Div) = "÷"
-  show (Operation OpeM.Prod) = "×"
-  show (Operation OpeM.Plus) = "+"
-  show (Operation OpeM.Minus) = "-"
-  show (Operation OpeM.Nop) = "Nop"
+  show (Operation MO.Div) = "÷"
+  show (Operation MO.Prod) = "×"
+  show (Operation MO.Plus) = "+"
+  show (Operation MO.Minus) = "-"
+  show (Operation MO.Nop) = "Nop"
   show Equal = "="
   show Dot = "."
   show (Num x) = toStringAs decimal x
@@ -41,11 +41,11 @@ instance showCommand :: Show Command where
 newtype Model = Model {
   total :: Number
 , next :: String
-, operation :: OpeM.Operation
+, operation :: MO.Operation
 , isError :: Boolean
 }
 
-updateModel :: OpeM.Operation -> Model -> Model
+updateModel :: MO.Operation -> Model -> Model
 updateModel op (Model model) = 
   case (updateTotal model.operation model.total model.next) of
     Just total -> 
@@ -58,11 +58,11 @@ updateModel op (Model model) =
       Model model
       { total = 0.0
       , next = ""
-      , operation = OpeM.Nop
+      , operation = MO.Nop
       , isError = true
       }
 
-updateTotal :: OpeM.Operation -> Number -> String -> Maybe Number
+updateTotal :: MO.Operation -> Number -> String -> Maybe Number
 updateTotal op total next = 
   if next /= "" 
     then
@@ -70,17 +70,16 @@ updateTotal op total next =
     else 
       pure total
 
-calc :: OpeM.Operation -> Number -> Number -> Maybe Number
+calc :: MO.Operation -> Number -> Number -> Maybe Number
 calc op num1 num2 = case op of
-  OpeM.Plus -> pure $ num1 + num2 
-  OpeM.Minus -> pure $ num1 - num2
-  OpeM.Prod -> pure $ num1 * num2
-  OpeM.Div ->
+  MO.Plus -> pure $ num1 + num2 
+  MO.Minus -> pure $ num1 - num2
+  MO.Prod -> pure $ num1 * num2
+  MO.Div ->
     if num2 == 0.0
       then Nothing
       else pure $ num1 / num2
-  OpeM.Nop -> pure $ num2
-  _ -> pure $ num1
+  MO.Nop -> pure $ num2
 
 
 instance showModel :: Show Model where
@@ -121,11 +120,11 @@ handleCommand command (Model model) =
       calc command' =
         case command' of
           AC ->
-            Model $ model { total = 0.0, next = "", operation = OpeM.Nop }
+            Model $ model { total = 0.0, next = "", operation = MO.Nop }
           PlusMinus ->
             if model.next == ""
               then
-                Model $ model { total = -model.total, operation = OpeM.Nop }
+                Model $ model { total = -model.total, operation = MO.Nop }
               else
                 Model $ model 
                   { next = 
@@ -136,7 +135,7 @@ handleCommand command (Model model) =
           Percent ->
             if model.next == ""
               then
-                Model $ model { total = model.total * 0.01, next = "", operation = OpeM.Nop }
+                Model $ model { total = model.total * 0.01, next = "", operation = MO.Nop }
               else
                 Model $ model
                   { next = stringFromNumber ((fromMaybe 0.0 $ Number.fromString model.next) / 100.0)
@@ -159,9 +158,8 @@ handleCommand command (Model model) =
                 ) <> "."
               }
           Equal ->
-            updateModel OpeM.Nop (Model model)
+            updateModel MO.Nop (Model model)
 
-          _ -> Model $ model
     if model.isError 
       then
         case command of
