@@ -25,6 +25,12 @@ body .github-fork-ribbon:before {
   }
 }
 
+@media (min-width: 320px) and (min-height: 320px) {
+  html {
+    font-size: 30px;
+  }
+}
+
 @media (min-width: 400px) and (min-height: 400px) {
   html {
     font-size: 35px;
