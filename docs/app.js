@@ -4089,7 +4089,7 @@ var PS = {};
           };
           return str;
       };
-      throw new Error("Failed pattern match at Model.Calculator (line 101, column 5 - line 115, column 19): " + [ v.constructor.name ]);
+      throw new Error("Failed pattern match at Model.Calculator (line 100, column 5 - line 114, column 19): " + [ v.constructor.name ]);
   };
   var stringFromNumber = function (total) {
       return removeZeros(Data_Number_Format.toStringWith(Data_Number_Format.precision(16))(total));
@@ -4216,7 +4216,7 @@ var PS = {};
               if (op instanceof Model_Operation.Nop) {
                   return Control_Applicative.pure(Data_Maybe.applicativeMaybe)(num2);
               };
-              return Control_Applicative.pure(Data_Maybe.applicativeMaybe)(num1);
+              throw new Error("Failed pattern match at Model.Calculator (line 74, column 21 - line 82, column 24): " + [ op.constructor.name ]);
           };
       };
   };
@@ -4338,7 +4338,7 @@ var PS = {};
               if (command$prime instanceof Equal) {
                   return updateModel(Model_Operation.Nop.value)(v);
               };
-              return Model(v);
+              throw new Error("Failed pattern match at Model.Calculator (line 121, column 9 - line 161, column 45): " + [ command$prime.constructor.name ]);
           };
           if (v.isError) {
               if (command instanceof AC) {
